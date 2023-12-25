@@ -7,6 +7,7 @@ pipeline {
     // DOCKERHUB_CREDENTIALS = credentials('dockerhub')
     CONTAINER_REGISTRY = credentials('azure-container-registry')
     IMAGE_NAME = 'myregistry25029.azurecr.io/go-service'
+    LOGIN_SERVER = 'myregistry25029.azurecr.io'
   }
   stages {
     stage('Build') {
