@@ -16,9 +16,7 @@ pipeline {
     }
     stage('Login') {
       steps {
-        sh 'echo $CONTAINER_REGISTRY'
-        sh 'echo  $CONTAINER_REGISTRY_CREDENTIALS_USR $CONTAINER_REGISTRY_CREDENTIALS_PSW'
-        sh 'docker login -u $CONTAINER_REGISTRY_CREDENTIALS_USR -p $CONTAINER_REGISTRY_CREDENTIALS_PSW'
+        sh 'echo $CONTAINER_REGISTRY_USR | docker login -u $CONTAINER_REGISTRY_USR -p $CONTAINER_REGISTRY_PSW'
       }
     }
     stage('Push') {
