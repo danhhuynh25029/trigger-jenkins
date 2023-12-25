@@ -18,5 +18,10 @@ func main() {
 			"message": "items",
 		})
 	})
+	r.GET("/products", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"message": "products",
+		})
+	})
 	r.Run()
 }
