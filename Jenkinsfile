@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'sudo docker build -t 25029/go-service .'
+        sh 'docker build -t 25029/go-service .'
       }
     }
     stage('Login') {
@@ -19,13 +19,13 @@ pipeline {
     }
     stage('Push') {
       steps {
-        sh 'sudo docker push 25029/go-service'
+        sh 'docker push 25029/go-service'
       }
     }
   }
   post {
     always {
-      sh 'sudo docker logout'
+      sh 'docker logout'
     }
   }
 }
