@@ -4,27 +4,30 @@ pipeline {
     buildDiscarder(logRotator(numToKeepStr: '5'))
   }
   environment {
-    DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+    // DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+    CONTAINER_REGISTRY = credentials('azure-container-registry')
+    IMAGE_NAME = 'myregistry25029.azurecr.io/go-service'
   }
   stages {
     stage('Build') {
       steps {
-        sh 'docker build -t 25029/go-service .'
+        sh 'docker build -t $IMAGE_NAME .'
       }
     }
     stage('Login') {
       steps {
-        sh 'docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW'
+        sh 'echo  $CONTAINER_REGISTRY_CREDENTIALS_USR $CONTAINER_REGISTRY_CREDENTIALS_PSW'
+        sh 'docker login -u $CONTAINER_REGISTRY_CREDENTIALS_USR -p $CONTAINER_REGISTRY_CREDENTIALS_PSW'
       }
     }
     stage('Push') {
       steps {
-        sh 'docker push 25029/go-service'
+        sh 'docker push $IMAGE_NAME'
       }
     }
     stage('Cleaning Up'){
         steps{
-            sh "docker rmi -f 25029/go-service"
+            sh 'docker rmi -f $IMAGE_NAME'
         }
     }
   }
