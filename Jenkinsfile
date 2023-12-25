@@ -14,13 +14,18 @@ pipeline {
     }
     stage('Login') {
       steps {
-        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+        sh 'docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW'
       }
     }
     stage('Push') {
       steps {
         sh 'docker push 25029/go-service'
       }
+    }
+    stage('Cleaning Up'){
+        steps{
+            sh "docker rmi -f 25029/go-service"
+        }
     }
   }
   post {
